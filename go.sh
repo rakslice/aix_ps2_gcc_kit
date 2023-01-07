@@ -48,23 +48,31 @@ dl "$exports_url/libgcc1.a" 0ca75ed5ce29b741da91265cdf01fd3aa97617deebb7e67b3497
 # - includes
 dl "$exports_url/aixinclude.dsk" cff38252ac668b321aa7d3098485a7f1d5c577d9f220b9eaf76c50db6580728373d578e6705c09e126990ea440fd64a7ff41c29ab1569a076b7dce48be9027a8
 # - libs
+dl "$exports_url/aixbaselib.dsk" 42a86eaeafd4afe27688b11722d03dadcef8bd300eef7a57216c97e955e42b32f2a4f0f7489732a4d5021b4990a3450f82700c434049ed831cf68d650294ff72
 dl "$exports_url/aixlib1.dsk" 4dfdbcc8dea7eb830d964e1203c961f20bd355725035fee2da8854369da55232ff7c5af9074a68700560a8c6167021f348fcc60b3f1f701d2d3691e58b724980
 dl "$exports_url/aixlib2.dsk" 8eb1a56c2f5174b8618bcf3eeec8ae42b8febe3297baeb7576355a4eae0ff51720180bc961e133eddd2f7f84936b89b3cd502e04e206d73b248df1d2affd396e
 
+
 cat aixinclude.dsk > aixinclude.tar.gz
 gunzip -f aixinclude.tar.gz || true
+
+cat aixbaselib.dsk > aixbaselib.tar.gz
+gunzip -f aixbaselib.tar.gz || true
+
+cat aixlib1.dsk aixlib2.dsk > aixlib.tar.gz
+gunzip -f aixlib.tar.gz || true
+
+mkdir -p sysroot
+pushd sysroot
+tar xf ../aixbaselib.tar
+tar xf ../aixlib.tar
+popd
+
 mkdir -p aixinclude
 pushd aixinclude
 tar xf ../aixinclude.tar
 cd usr
-patch -p1 -i ../../includes.patch
-popd
-
-cat aixlib1.dsk aixlib2.dsk > aixlib.tar.gz
-gunzip -f aixlib.tar.gz || true
-mkdir -p aixlib
-pushd aixlib
-tar xf ../aixlib.tar
+patch -p2 -i ../../includes.patch
 popd
 
 sudo ./create_chroot.sh "$@"

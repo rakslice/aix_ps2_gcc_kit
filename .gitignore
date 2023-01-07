@@ -8,15 +8,17 @@
 
 # export elements from aix
 /aixinclude.dsk
+/aixbaselib.dsk
 /aixlib1.dsk
 /aixlib2.dsk
 /libgcc1.a
 
 # extracted export stuff
-/aixinclude.tar
-/aixinclude
+/aixbaselib.tar
 /aixlib.tar
-/aixlib
+/aixinclude.tar
+/sysroot
+/aixinclude
 
 # chroot dirs
 /cdrom_chroot
@@ -24,7 +26,16 @@
 
 # code build dirs
 /build-binutils/
+/build-binutils.1/
 /build-gcc/
+/build-gcc.1/
+
+# headers work dirs
+/headers_work/orig
+/headers_work/mod
 
 # marker files indicating components are done
 /*.done
+
+# other files laying around
+/*.iso

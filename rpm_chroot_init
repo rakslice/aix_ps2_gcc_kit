@@ -9,10 +9,10 @@ rpm --initdb --root $inner_chroot
 rpm_names=""
 
 for p in \
-basesystem grep ldconfig glibc termcap libtermcap fileutils bash \
+setup filesystem basesystem textutils grep ldconfig glibc termcap libtermcap fileutils bash \
 zlib rpm ncurses info make binutils tar gcc gcc-c++ patch gzip \
 gawk sed cracklib-dicts pamconfig pwdb pam sh-utils which less \
-textutils flex diffutils \
+flex diffutils \
 kernel-headers glibc-devel \
 	; do
 	if rpm --root $inner_chroot -q $p; then

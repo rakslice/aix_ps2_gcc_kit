@@ -1,0 +1,47 @@
+diff -ur include/stddef.h /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stddef.h
+--- include/stddef.h	Fri May 25 08:24:48 2018
++++ /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stddef.h	Fri May 25 08:40:54 2018
+@@ -238,7 +238,10 @@
+ #define __WCHAR_TYPE__ int
+ #endif
+ #ifndef __cplusplus
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
+ typedef __WCHAR_TYPE__ wchar_t;
++#endif
+ #endif
+ #endif
+ #endif
+diff -ur include/stdlib.h /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stdlib.h
+--- include/stdlib.h	Fri May 25 08:24:48 2018
++++ /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stdlib.h	Fri May 25 10:32:36 2018
+@@ -59,9 +59,15 @@
+ #define __WCHAR_TYPE__ int
+ #endif
+ #ifndef __cplusplus
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
+ typedef __WCHAR_TYPE__ wchar_t;		/* As per ANSI */
+ #endif
++#endif
++#ifndef _IS_MBCHAR_T_
++#define _IS_MBCHAR_T_
+ typedef unsigned long mbchar_t;
++#endif
+ #ifndef __SIZE_TYPE__
+ #define __SIZE_TYPE__ long unsigned int
+ #endif
+@@ -79,7 +85,13 @@
+ #endif /* MB_CUR_MAX */
+ 
+ extern int mblen(const char *, size_t);
++#ifndef _IS_MBTOWC_
++#define _IS_MBTOWC_
+ extern int mbtowc(wchar_t *, const char *, size_t);
++#endif
+ extern int wctomb(char *, wchar_t);
++#ifndef _IS_MBSTOWCS_
++#define _IS_MBSTOWCS_
+ extern size_t mbstowcs(wchar_t *, const char *, size_t);
++#endif
+ extern size_t wcstombs(char *, const wchar_t *, size_t);

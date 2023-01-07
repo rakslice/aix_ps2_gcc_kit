@@ -8,3 +8,5 @@ cd build-binutils
 make $@
 make install 
 
+cd ..
+mv build-binutils build-binutils.1

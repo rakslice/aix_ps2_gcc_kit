@@ -2,7 +2,7 @@
 set -e -x
 
 # The $PREFIX/bin dir _must_ be in the PATH. We did that above.
-which -- $TARGET-as || echo $TARGET-as is not in the PATH
+which $TARGET-as
  
 mkdir build-gcc
 cd build-gcc

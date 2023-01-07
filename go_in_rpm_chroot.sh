@@ -11,6 +11,9 @@ function have() {
 	touch "$1.done"
 }
 
+#common_make_args=" "
+common_make_args="-j4"
+
 set -x
 
 cd /home/user/src/aix_toolchain_new
@@ -22,9 +25,17 @@ export HOST="i386-redhat-linux"
 
 if need binutils-near; then
 
-#tar xf gcc-2.7.2.3
+  # copy the sysroot into place
+  mkdir -p $PREFIX
+  cp -avf sysroot $PREFIX
+  # copy the includes into the archdir
+  mkdir -p $PREFIX/$TARGET
+  cp -avf aixinclude/usr/include $PREFIX/$TARGET
+  # copy all the libs into the target-name dir
+  cp -avf $PREFIX/sysroot/lib $PREFIX/$TARGET
+  cp -avf $PREFIX/sysroot/usr/lib $PREFIX/$TARGET
 
-  ./binutils.sh -j4
+  ./binutils.sh $common_make_args
 
   have binutils-near
 
@@ -32,12 +43,24 @@ fi
 
 if need gcc-near; then
 
-  cp -avf aixinclude/usr/include $PREFIX/$TARGET
-  cp -avf aixlib/usr/lib $PREFIX/$TARGET
 
   #bash
 
-  ./gcc.sh -j4
+  ./gcc.sh $common_make_args
+
+  cat gcc-lib-include.patch | patch -p0 -d $PREFIX/lib/gcc-lib/i386-ibm-aix/2.7.2.3
 
   have gcc-near
+fi
+
+#if need gcc-far; then
+#  ./gcc-far.sh $common_make_args
+#
+#  have gcc-far
+#fi
+
+if need gcc-far-2; then
+  ./gcc-far-2.sh $common_make_args
+
+  have gcc-far-2
 fi
