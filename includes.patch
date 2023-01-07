@@ -1,0 +1,123 @@
+diff -ur usr/include/ctab.h /home/rakslice/opt/cross/i386-ibm-aix/include/ctab.h
+--- usr/include/ctab.h	Wed Feb 21 14:50:22 1990
++++ /home/rakslice/opt/cross/i386-ibm-aix/include/ctab.h	Fri May 25 08:38:13 2018
+@@ -17,9 +17,17 @@
+ #ifndef _H_CTAB
+ #define _H_CTAB
+ #ifndef _h_NLCHAR
+-typedef unsigned char UCHAR;	/* redefined to avoid including NLchar.h */
++
++#ifndef _IS_UCHAR_
++#define _IS_UCHAR_
++typedef unsigned char UCHAR;    /* redefined to avoid including NLchar.h */
++#endif
++
+ #ifdef _MBCS
+-typedef unsigned long wchar_t;	/* redefined to avoid including mbcs.h */
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
++typedef int wchar_t;     /* redefined to avoid including mbcs.h */
++#endif
+ struct NLctab {
+ 	long	ct_maxctp;		/* Number of chars for ctype */
+ 	long	ct_maxcol;		/* Number of chars for collation */
+diff -ur usr/include/mbcs.h /home/rakslice/opt/cross/i386-ibm-aix/include/mbcs.h
+--- usr/include/mbcs.h	Wed Feb 21 14:50:24 1990
++++ /home/rakslice/opt/cross/i386-ibm-aix/include/mbcs.h	Fri May 25 10:31:10 2018
+@@ -56,7 +56,10 @@
+ /*
+  * Typedefs specific to mbcs.
+  */
++#ifndef _IS_MBCHAR_T_
++#define _IS_MBCHAR_T_
+ typedef unsigned long mbchar_t;
++#endif
+ 
+ /*
+  * This is a per character conversion entry structure.  It is used in the
+@@ -252,8 +255,14 @@
+ extern char	*mbspbrk(const char *, const char *);
+ extern char	*mbstok(char *, const char *);
+ 
++#ifndef _IS_MBTOWC_
++#define _IS_MBTOWC_
+ extern int	mbtowc(wchar_t *, const char *, size_t);
++#endif
++#ifndef _IS_MBSTOWCS_
++#define _IS_MBSTOWCS_
+ extern size_t	mbstowcs(wchar_t *, const char *, size_t);
++#endif
+ extern size_t	mbslen(const char *);
+ extern int	mblen(const char *, size_t);
+ extern int	mbdwidth(const char *);
+diff -ur usr/include/stddef.h /home/rakslice/opt/cross/i386-ibm-aix/include/stddef.h
+--- usr/include/stddef.h	Wed Feb 21 14:50:26 1990
++++ /home/rakslice/opt/cross/i386-ibm-aix/include/stddef.h	Fri May 25 08:15:57 2018
+@@ -10,14 +10,19 @@
+  */
+ /* stddef.h */
+ 
++#ifndef _STDDEF_H_
++#define _STDDEF_H_
++
+ typedef int ptrdiff_t;
++
+ typedef long size_t;
++/*
++ * MBCS typedefs 
++ */
++typedef unsigned long	wchar_t;	/* wide character */
+ 
+ #define NULL	0
+ 
+ #define offsetof(struct_s, member_m) (size_t)(&((struct_s *)0)->member_m)
+ 
+-/*
+- * MBCS typedefs 
+- */
+-typedef unsigned long	wchar_t;	/* wide character */
++#endif
+diff -ur usr/include/stdio.h /home/rakslice/opt/cross/i386-ibm-aix/include/stdio.h
+--- usr/include/stdio.h	Wed Feb 21 14:50:26 1990
++++ /home/rakslice/opt/cross/i386-ibm-aix/include/stdio.h	Fri May 25 08:16:34 2018
+@@ -138,7 +138,9 @@
+ #define	TMP_MAX	4096
+ #define	FOPEN_MAX 200
+ 
++#ifndef __SIZE_TYPE__
+ typedef	long	size_t;
++#endif
+ 
+ #ifdef CC4
+ #define _bufend(p)	_bufendtab[(p)->_file]
+@@ -224,9 +226,11 @@
+ #endif
+ #endif
+ 
++#ifndef __WCHAR_TYPE__
+ typedef unsigned long wchar_t;			/* This is against ansi rule */
+ 						/* except we need wchar_t    */
+ 						/* defined for out functions */
++#endif
+ 
+ #ifndef	lint					/* proto-types do not work   */
+ 						/* with lint                 */
+diff -ur usr/include/sys/NLchar.h /home/rakslice/opt/cross/i386-ibm-aix/include/sys/NLchar.h
+--- usr/include/sys/NLchar.h	Wed Feb 21 14:50:26 1990
++++ /home/rakslice/opt/cross/i386-ibm-aix/include/sys/NLchar.h	Fri May 25 08:39:06 2018
+@@ -28,8 +28,15 @@
+ /*  The big type itself.
+  */
+ 
++#ifndef _IS_NLCHAR_
++#define _IS_NLCHAR_
+ typedef wchar_t NLchar;
++#endif
++
++#ifndef _IS_UCHAR_
++#define _IS_UCHAR_
+ typedef unsigned char  UCHAR;
++#endif
+ 
+ /*  Number of distinct NLchars.
+  */

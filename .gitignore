@@ -1,0 +1,30 @@
+# downloaded source code
+/binutils-2.9.1.tar.gz
+/gcc-2.7.2.3.tar.gz
+
+# extracted source code
+/binutils-2.9.1/
+/gcc-2.7.2.3/
+
+# export elements from aix
+/aixinclude.dsk
+/aixlib1.dsk
+/aixlib2.dsk
+/libgcc1.a
+
+# extracted export stuff
+/aixinclude.tar
+/aixinclude
+/aixlib.tar
+/aixlib
+
+# chroot dirs
+/cdrom_chroot
+/rh5_chroot
+
+# code build dirs
+/build-binutils/
+/build-gcc/
+
+# marker files indicating components are done
+/*.done

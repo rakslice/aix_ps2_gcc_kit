@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e -x
+
+inner_chroot=/mnt/target
+mkdir -p $inner_chroot/var/lib/rpm
+rpm --initdb --root $inner_chroot
+
+
+rpm_names=""
+
+for p in \
+basesystem grep ldconfig glibc termcap libtermcap fileutils bash \
+zlib rpm ncurses info make binutils tar gcc gcc-c++ patch gzip \
+gawk sed cracklib-dicts pamconfig pwdb pam sh-utils which less \
+textutils flex diffutils \
+kernel-headers glibc-devel \
+	; do
+	if rpm --root $inner_chroot -q $p; then
+		continue
+	fi
+	rpm_name="$(find /mnt/cdrom -name "$p-[0-9.\-]*.rpm")"
+	#rpm -qpl $rpm_name
+	rpm_names="$rpm_names $rpm_name"
+done
+if [ "$rpm_names" != "" ]; then
+	rpm -ivh --root $inner_chroot $rpm_names
+fi

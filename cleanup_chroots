@@ -1,0 +1,5 @@
+#!/bin/bash
+set -x
+
+for f in $(mount | fgrep cdrom_chroot | cut -d' ' -f3 | sort -r); do sudo umount $f; done
+for f in $(mount | fgrep rh5_chroot | cut -d' ' -f3 | sort -r); do sudo umount $f; done

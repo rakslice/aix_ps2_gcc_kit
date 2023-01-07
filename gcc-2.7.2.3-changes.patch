@@ -1,0 +1,13 @@
+diff -ur temp/vanilla/gcc-2.7.2.3/config/i386/aix386ng.h ./gcc-2.7.2.3/config/i386/aix386ng.h
+--- temp/vanilla/gcc-2.7.2.3/config/i386/aix386ng.h	Thu Jun 15 06:44:23 1995
++++ ./gcc-2.7.2.3/config/i386/aix386ng.h	Fri May 25 08:24:24 2018
+@@ -40,7 +40,8 @@
+ 
+ /* Special flags for the linker.  I don't know what they do.  */
+ 
+-#define LINK_SPEC "%{K} %{!K:-K} %{T*} %{z:-lm}"
++/* #define LINK_SPEC "%{K} %{!K:-K} %{T*} %{z:-lm}" */
++#define LINK_SPEC "%{T*} %{z:-lm}"
+ 
+ /* Specify predefined symbols in preprocessor.  */
+ 
