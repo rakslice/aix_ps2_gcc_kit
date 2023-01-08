@@ -43,24 +43,18 @@ fi
 
 if need gcc-near; then
 
-
-  #bash
-
   ./gcc.sh $common_make_args
 
   cat gcc-lib-include.patch | patch -p0 -d $PREFIX/lib/gcc-lib/i386-ibm-aix/2.7.2.3
 
   have gcc-near
+
 fi
 
-#if need gcc-far; then
-#  ./gcc-far.sh $common_make_args
-#
-#  have gcc-far
-#fi
-
 if need gcc-far-2; then
+
   ./gcc-far-2.sh $common_make_args
 
   have gcc-far-2
+
 fi
