@@ -16,7 +16,7 @@ aixbaselib.dsk, and aixlib{1,2}.dsk respectively. Put them in the current direct
 Put the libgcc1.a into the current directory. (todo: figure out the requirements and steps for this)
 
 3. Mount the rh 5.0.5 cdrom in /mnt/cdrom (or edit the cdrom= variable
-at the top of create_chroot.sh if you have it at a different path).
+at the top of create_chroot.sh if you have the contents at a different path).
 
 4. Run ./go.sh
 

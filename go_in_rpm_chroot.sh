@@ -28,7 +28,7 @@ if need binutils-near; then
   # copy the sysroot into place
   mkdir -p $PREFIX
   cp -avf sysroot $PREFIX
-  # copy the includes into the archdir
+  # copy the includes into the target-name dir
   mkdir -p $PREFIX/$TARGET
   cp -avf aixinclude/usr/include $PREFIX/$TARGET
   # copy all the libs into the target-name dir

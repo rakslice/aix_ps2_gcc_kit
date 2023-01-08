@@ -47,8 +47,6 @@ patch -p1 -i gcc-2.7.2.3-changes.patch
 
 # things from the aix machine we need
 
-exports_url="$source_url/aix%20gcc%20build"
-
 # - built libgcc1.a
 
 [ -f libgcc1.a ]
@@ -86,6 +84,7 @@ cd usr
 patch -p2 -i ../../includes.patch
 popd
 
+# This will prepare the chroot and run the go_in_rpm_chroot.sh script inside to do the build
 sudo ./create_chroot.sh "$@"
 
 # pack the disk images
@@ -93,6 +92,7 @@ tar czf crossnative.tar.gz build-gcc
 
 split -b 1440k crossnative.tar.gz crossnative.dsk.
 
+# expect 3 parts
 [ -f crossnative.dsk.ac ]
 [ ! -f crossnative.dsk.ad ]
 
