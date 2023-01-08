@@ -4,3 +4,6 @@ TODO
 - automate building the libgcc1.a on the aix machine
 - figure out if we can git rid of the gcc-lib includes patch in the middle of the process by just making changes to the gcc source
 - double check the process for libgcc1.a
+- explore fakeroot so we don't need root perms at all or at least make the build 
+   part of the build not use them
+- document the host machine requirements
