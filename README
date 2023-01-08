@@ -1,6 +1,23 @@
 
 A kit for cross building gcc-2.7.2.3 for aix ps/2 using red hat linux 5.0.5 (which also has 2.7.2.3)
 
+Steps
+
+1. Get the required exports (headers, libs) from the aix machine.
+dd in the disks to disk images. This will give you the aixinclude.dsk and
+aixlib{1,2}.dsk files. Put them in the current directory.
+
+2. Put the gcc-2.7.2.3 source on the aix machine and build libgcc1.a.
+Put the libgcc1.a into the current directory.
+
+3. Mount the rh 5.0.5 cdrom in /mnt/cdrom (or edit the cdrom= variable
+at the top of create_chroot.sh if you have it at a different path).
+
+4. Run ./go.sh  It will do the build and put the resulting build directory
+into the disk images crossnative{1,2,3}.dsk
+
+5. Extract the disk images on the aix system and run make install in the build directory
+
 
 Scripts and pieces
 
