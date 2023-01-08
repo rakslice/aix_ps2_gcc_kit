@@ -22,6 +22,18 @@ function have() {
 	touch "$1.done"
 }
 
+function pad_file() {
+	[ $# -eq 2 ]
+	file="$1"
+	target_size=$2
+	cur_size=$(stat -c "%s" "$file")
+	if [ $cur_size -lt $target_size ]; then
+		pad_size=$(( $target_size - $cur_size ))
+		dd if=/dev/zero bs=1 count=$pad_size | cat "$file" - > "$file.padded"
+		mv "$file.padded" "$file"
+	fi
+}
+
 set -x
 
 source_url="http://192.168.2.158:8122/source/open%20source/"
@@ -88,3 +100,4 @@ split -b 1440k crossnative.tar.gz crossnative.dsk.
 mv crossnative.dsk.aa crossnative1.dsk
 mv crossnative.dsk.ab crossnative2.dsk
 mv crossnative.dsk.ac crossnative3.dsk
+pad_file crossnative3.dsk 1474560
