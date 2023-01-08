@@ -18,10 +18,15 @@ Put the libgcc1.a into the current directory. (todo: figure out the requirements
 3. Mount the rh 5.0.5 cdrom in /mnt/cdrom (or edit the cdrom= variable
 at the top of create_chroot.sh if you have it at a different path).
 
-4. Run ./go.sh  It will do the build and put the resulting build directory
-into the disk images crossnative{1,2,3}.dsk
+4. Run ./go.sh
 
-5. To install, extract the disk images on the aix system and run make install in the build directory
+ This will prepare the chroots and do the builds.
+
+ If everything is successful it will put the resulting build-gcc directory into the disk images
+  crossnative{1,2,3}.dsk
+
+5. To install, extract the disk images on the aix system to get the build-gcc directory and in it run
+    make install
 
 
 Scripts and pieces
@@ -29,7 +34,7 @@ Scripts and pieces
 ./go.sh [options] - do the build
     Options (max 1)
     -c  - pop a shell in the rh5 cdrom chroot used to prepare the rh5 install 
-    -f {filename} - find_in_cdrom.sh run: try to find an rpm the rh5 cdrom with a file matching a given pattern
+    -f {filename} - find_in_cdrom.sh run: try to find an rpm on the rh5 cdrom with a file matching a given pattern
     -d  - pop a shell in the rh5 install chroot before the build
 ./cleanup_chroots - cleanup any mounted chroot directories, for when a run stopped unsafely
 ./reset.sh - clean up all the extracted/intermediate files including the chroots
