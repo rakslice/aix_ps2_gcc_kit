@@ -21,7 +21,7 @@ cd /home/user/src/aix_toolchain_new
 export PREFIX="$HOME/opt/cross"
 export TARGET=i386-ibm-aix
 export PATH="$PREFIX/bin:$PATH"
-export HOST="i386-redhat-linux"
+export HOST="i486-unknown-linux"
 
 if need binutils-near; then
 

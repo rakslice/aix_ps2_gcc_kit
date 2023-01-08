@@ -16,7 +16,7 @@ cp ../libgcc1.a .
 export PREFIX="$PREFIX/../far"
 
 ../gcc-2.7.2.3/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ \
---with-sysroot="$PREFIX/sysroot" --host=$TARGET --with-headers --build=i486-unknown-linux
+--with-sysroot="$PREFIX/sysroot" --host=$TARGET --with-headers --build="$HOST"
 
 args="LANGUAGES=c GCC_FOR_TARGET=i386-ibm-aix-gcc CC=i386-ibm-aix-gcc HOST_CC=gcc HOST_ALLOCA= HOST_CLIB= "
 make $args "$@"
