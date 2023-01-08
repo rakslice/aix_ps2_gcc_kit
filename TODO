@@ -1,4 +1,5 @@
 TODO
-- investigate binutils-far (haven't looked at that one yet)
+- investigate cross binutils (binutils-far.sh, haven't looked at that one yet)
 - automate gathering the inputs from the aix machine (includes, libs)
 - automate building the libgcc1.a on the aix machine
+- figure out if we can git rid of the gcc-lib includes patch in the middle of the process by just making changes to the gcc source
