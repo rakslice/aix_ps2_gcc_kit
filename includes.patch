@@ -86,18 +86,23 @@ diff -ur --no-dereference orig/usr/include/stddef.h mod/usr/include/stddef.h
 +#endif
 diff -ur --no-dereference orig/usr/include/stdio.h mod/usr/include/stdio.h
 --- orig/usr/include/stdio.h	1990-02-21 14:50:26.000000000 -0800
-+++ mod/usr/include/stdio.h	2023-01-07 14:50:20.413391382 -0800
-@@ -138,7 +138,9 @@
++++ mod/usr/include/stdio.h	2023-01-07 16:01:56.696918255 -0800
+@@ -138,7 +138,13 @@
  #define	TMP_MAX	4096
  #define	FOPEN_MAX 200
  
+-typedef	long	size_t;
++#ifndef _IS_SIZE_T_
++#define _IS_SIZE_T_
 +#ifndef __SIZE_TYPE__
- typedef	long	size_t;
++#define __SIZE_TYPE__ long
++#endif
++typedef	__SIZE_TYPE__	size_t;
 +#endif
  
  #ifdef CC4
  #define _bufend(p)	_bufendtab[(p)->_file]
-@@ -224,9 +226,11 @@
+@@ -224,9 +230,11 @@
  #endif
  #endif
  
