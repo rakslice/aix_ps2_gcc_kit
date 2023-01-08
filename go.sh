@@ -76,3 +76,15 @@ patch -p2 -i ../../includes.patch
 popd
 
 sudo ./create_chroot.sh "$@"
+
+# pack the disk images
+tar czf crossnative.tar.gz build-gcc
+
+split -b 1440k crossnative.tar.gz crossnative.dsk.
+
+[ -f crossnative.dsk.ac ]
+[ ! -f crossnative.dsk.ad ]
+
+mv crossnative.dsk.aa crossnative1.dsk
+mv crossnative.dsk.ab crossnative2.dsk
+mv crossnative.dsk.ac crossnative3.dsk

@@ -37,5 +37,9 @@
 # marker files indicating components are done
 /*.done
 
+# output files
+crossnative.tar.gz
+crossnative*.dsk
+
 # other files laying around
 /*.iso
