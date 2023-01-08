@@ -10,7 +10,7 @@ cd build-gcc
 cp ../libgcc1.a .
 
 ../gcc-2.7.2.3/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ \
---with-sysroot="$PREFIX/sysroot" --host=i486-unknown-linux --with-headers
+--with-sysroot="$PREFIX/sysroot" --host="$HOST" --with-headers
 make LANGUAGES=c "$@"
 make LANGUAGES=c install
 
