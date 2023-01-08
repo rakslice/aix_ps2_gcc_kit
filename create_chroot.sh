@@ -34,6 +34,11 @@ if [ ! -e $chroot/dev/null ]; then
 	mknod $chroot/dev/null c 1 3
 fi
 
+if [ ! -e rh5_chroot/dev/null ]; then
+	mkdir -p rh5_chroot/dev
+	mknod rh5_chroot/dev/null c 1 3
+fi
+
 mount --bind /proc $chroot/proc
 
 mount --bind rh5_chroot $chroot/mnt/target
