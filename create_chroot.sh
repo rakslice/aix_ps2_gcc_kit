@@ -121,3 +121,4 @@ sleep 2
 
 for f in $(mount | fgrep $chroot | cut -d' ' -f3 | sort -r); do sudo umount $f; done
 
+[ $result -eq 0 ]
