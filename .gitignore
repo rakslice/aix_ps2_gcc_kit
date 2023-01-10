@@ -40,6 +40,7 @@
 # output files
 crossnative.tar.gz
 crossnative*.dsk
+binutils.tar.gz
 
 # other files laying around
 /*.iso

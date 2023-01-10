@@ -12,7 +12,7 @@ cd build-binutils
 #../binutils-2.9.1/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror 
 
 export PREFIX=${PREFIX}-far
-../binutils-2.9.1/configure --build="i486-box-linux" --target=$TARGET --host=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror 
+../binutils-2.9.1/configure --build="$HOST" --target=$TARGET --host=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror 
 make
 make install
 

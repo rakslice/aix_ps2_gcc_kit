@@ -100,3 +100,5 @@ mv crossnative.dsk.aa crossnative1.dsk
 mv crossnative.dsk.ab crossnative2.dsk
 mv crossnative.dsk.ac crossnative3.dsk
 pad_file crossnative3.dsk 1474560
+
+tar czf binutils.tar.gz rh5_chroot/root/opt/cross-far

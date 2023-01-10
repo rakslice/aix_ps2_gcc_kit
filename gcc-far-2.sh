@@ -20,5 +20,8 @@ export PREFIX="$PREFIX/../far"
 
 args="LANGUAGES=c GCC_FOR_TARGET=i386-ibm-aix-gcc CC=i386-ibm-aix-gcc HOST_CC=gcc HOST_ALLOCA= HOST_CLIB= "
 make $args "$@"
+make $args libgcc.a "$@"
 make $args install
+
+cp ../far-install.sh .
 

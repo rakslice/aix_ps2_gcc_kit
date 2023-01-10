@@ -58,3 +58,9 @@ if need gcc-far-2; then
   have gcc-far-2
 
 fi
+
+if need binutils-far; then
+  ./binutils-far.sh $common_make_args
+
+  have binutils-far
+fi
