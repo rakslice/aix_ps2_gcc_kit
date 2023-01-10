@@ -15,5 +15,5 @@ if [ ! -d $gcc/lib ]; then
   mkdir -p $gcc/lib
 fi
 
-cp libgcc1.a $gcc/lib
+cp libgcc.a $gcc/lib
 
