@@ -30,17 +30,23 @@
 /build-gcc/
 /build-gcc.1/
 
+# headers build dir
+/sysroot_headers
+
 # headers work dirs
 /headers_work/orig
 /headers_work/mod
+/fixincludes_work/orig
+/fixincludes_work/mod
 
 # marker files indicating components are done
 /*.done
 
 # output files
-crossnative.tar.gz
-crossnative*.dsk
-binutils.tar.gz
+/crossnative.tar.gz
+/crossnative*.dsk
+/binutils.tar.gz
+/sysroot_headers.tar.gz
 
 # other files laying around
 /*.iso

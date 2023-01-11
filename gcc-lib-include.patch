@@ -1,21 +1,35 @@
-diff -ur include/stddef.h /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stddef.h
---- include/stddef.h	Fri May 25 08:24:48 2018
-+++ /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stddef.h	Fri May 25 08:40:54 2018
-@@ -238,7 +238,10 @@
+diff -ur --no-dereference orig/include/stddef.h mod/include/stddef.h
+--- orig/include/stddef.h	2023-01-10 19:07:10.232118326 -0800
++++ mod/include/stddef.h	2023-01-10 19:10:05.233202593 -0800
+@@ -163,7 +163,10 @@
+ #define __SIZE_TYPE__ long unsigned int
+ #endif
+ #if !(defined (__GNUG__) && defined (size_t))
++#ifndef _IS_SIZE_T_
++#define _IS_SIZE_T_
+ typedef __SIZE_TYPE__ size_t;
++#endif
+ #endif /* !(defined (__GNUG__) && defined (size_t)) */
+ #endif /* __size_t */
+ #endif /* _SIZET_ */
+@@ -238,10 +241,13 @@
  #define __WCHAR_TYPE__ int
  #endif
  #ifndef __cplusplus
 +#ifndef _IS_WCHAR_T_
 +#define _IS_WCHAR_T_
  typedef __WCHAR_TYPE__ wchar_t;
+ #endif
+ #endif
+ #endif
 +#endif
  #endif
  #endif
  #endif
-diff -ur include/stdlib.h /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stdlib.h
---- include/stdlib.h	Fri May 25 08:24:48 2018
-+++ /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.2.3/include/stdlib.h	Fri May 25 10:32:36 2018
-@@ -59,9 +59,15 @@
+diff -ur --no-dereference orig/include/stdlib.h mod/include/stdlib.h
+--- orig/include/stdlib.h	2023-01-10 19:07:10.232118326 -0800
++++ mod/include/stdlib.h	2023-01-10 18:52:57.000000000 -0800
+@@ -58,9 +58,15 @@
  #define __WCHAR_TYPE__ int
  #endif
  #ifndef __cplusplus
@@ -31,7 +45,7 @@ diff -ur include/stdlib.h /home/rakslice/opt/cross/lib/gcc-lib/i386-ibm-aix/2.7.
  #ifndef __SIZE_TYPE__
  #define __SIZE_TYPE__ long unsigned int
  #endif
-@@ -79,7 +85,13 @@
+@@ -78,7 +84,13 @@
  #endif /* MB_CUR_MAX */
  
  extern int mblen(const char *, size_t);

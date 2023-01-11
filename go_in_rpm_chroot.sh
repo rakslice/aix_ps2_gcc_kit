@@ -45,7 +45,7 @@ if need gcc-near; then
 
   ./gcc.sh $common_make_args
 
-  cat gcc-lib-include.patch | patch -p0 -d $PREFIX/lib/gcc-lib/i386-ibm-aix/2.7.2.3
+  cat gcc-lib-include.patch | patch -p1 -d $PREFIX/lib/gcc-lib/i386-ibm-aix/2.7.2.3
 
   have gcc-near
 

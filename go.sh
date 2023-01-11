@@ -53,17 +53,13 @@ patch -p1 -i gcc-2.7.2.3-changes.patch
 
 # - includes
 
-[ -f aixinclude.dsk ]
+./headers.sh
 
 # - libs
 
 [ -f aixbaselib.dsk ]
 [ -f aixlib1.dsk ]
 [ -f aixlib2.dsk ]
-
-
-cat aixinclude.dsk > aixinclude.tar.gz
-gunzip -f aixinclude.tar.gz || true
 
 cat aixbaselib.dsk > aixbaselib.tar.gz
 gunzip -f aixbaselib.tar.gz || true
@@ -75,13 +71,6 @@ mkdir -p sysroot
 pushd sysroot
 tar xf ../aixbaselib.tar
 tar xf ../aixlib.tar
-popd
-
-mkdir -p aixinclude
-pushd aixinclude
-tar xf ../aixinclude.tar
-cd usr
-patch -p2 -i ../../includes.patch
 popd
 
 # This will prepare the chroot and run the go_in_rpm_chroot.sh script inside to do the build

@@ -1,6 +1,6 @@
 diff -ur --no-dereference orig/usr/include/ctab.h mod/usr/include/ctab.h
---- orig/usr/include/ctab.h	1990-02-21 14:50:22.000000000 -0800
-+++ mod/usr/include/ctab.h	2023-01-07 14:50:20.410057970 -0800
+--- orig/usr/include/ctab.h	2023-01-09 03:51:11.000000000 -0800
++++ mod/usr/include/ctab.h	2023-01-10 13:12:18.981432018 -0800
 @@ -17,9 +17,17 @@
  #ifndef _H_CTAB
  #define _H_CTAB
@@ -22,8 +22,8 @@ diff -ur --no-dereference orig/usr/include/ctab.h mod/usr/include/ctab.h
  	long	ct_maxctp;		/* Number of chars for ctype */
  	long	ct_maxcol;		/* Number of chars for collation */
 diff -ur --no-dereference orig/usr/include/mbcs.h mod/usr/include/mbcs.h
---- orig/usr/include/mbcs.h	1990-02-21 14:50:24.000000000 -0800
-+++ mod/usr/include/mbcs.h	2023-01-07 14:50:20.410057970 -0800
+--- orig/usr/include/mbcs.h	2023-01-09 03:51:12.000000000 -0800
++++ mod/usr/include/mbcs.h	2023-01-10 13:12:18.984765439 -0800
 @@ -56,7 +56,10 @@
  /*
   * Typedefs specific to mbcs.
@@ -51,9 +51,9 @@ diff -ur --no-dereference orig/usr/include/mbcs.h mod/usr/include/mbcs.h
  extern int	mblen(const char *, size_t);
  extern int	mbdwidth(const char *);
 diff -ur --no-dereference orig/usr/include/stddef.h mod/usr/include/stddef.h
---- orig/usr/include/stddef.h	1990-02-21 14:50:26.000000000 -0800
-+++ mod/usr/include/stddef.h	2023-01-07 14:50:20.413391382 -0800
-@@ -10,14 +10,25 @@
+--- orig/usr/include/stddef.h	2023-01-09 03:51:17.000000000 -0800
++++ mod/usr/include/stddef.h	2023-01-10 14:24:41.267513296 -0800
+@@ -10,14 +10,28 @@
   */
  /* stddef.h */
  
@@ -77,7 +77,10 @@ diff -ur --no-dereference orig/usr/include/stddef.h mod/usr/include/stddef.h
  /*
   * MBCS typedefs 
   */
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
  typedef unsigned long	wchar_t;	/* wide character */
++#endif
 +
 +#define NULL	0
 +
@@ -85,8 +88,8 @@ diff -ur --no-dereference orig/usr/include/stddef.h mod/usr/include/stddef.h
 +
 +#endif
 diff -ur --no-dereference orig/usr/include/stdio.h mod/usr/include/stdio.h
---- orig/usr/include/stdio.h	1990-02-21 14:50:26.000000000 -0800
-+++ mod/usr/include/stdio.h	2023-01-07 16:01:56.696918255 -0800
+--- orig/usr/include/stdio.h	2023-01-09 03:51:17.000000000 -0800
++++ mod/usr/include/stdio.h	2023-01-10 13:12:18.984765439 -0800
 @@ -138,7 +138,13 @@
  #define	TMP_MAX	4096
  #define	FOPEN_MAX 200
@@ -115,8 +118,8 @@ diff -ur --no-dereference orig/usr/include/stdio.h mod/usr/include/stdio.h
  #ifndef	lint					/* proto-types do not work   */
  						/* with lint                 */
 diff -ur --no-dereference orig/usr/include/string.h mod/usr/include/string.h
---- orig/usr/include/string.h	1990-02-21 14:50:26.000000000 -0800
-+++ mod/usr/include/string.h	2023-01-07 14:50:20.433391848 -0800
+--- orig/usr/include/string.h	2023-01-09 03:51:17.000000000 -0800
++++ mod/usr/include/string.h	2023-01-10 13:12:18.984765439 -0800
 @@ -12,7 +12,13 @@
   */
  
@@ -133,8 +136,8 @@ diff -ur --no-dereference orig/usr/include/string.h mod/usr/include/string.h
  extern char
  	*strcpy(),
 diff -ur --no-dereference orig/usr/include/sys/NLchar.h mod/usr/include/sys/NLchar.h
---- orig/usr/include/sys/NLchar.h	1990-02-21 14:50:26.000000000 -0800
-+++ mod/usr/include/sys/NLchar.h	2023-01-07 14:50:20.433391848 -0800
+--- orig/usr/include/sys/NLchar.h	2023-01-09 03:51:17.000000000 -0800
++++ mod/usr/include/sys/NLchar.h	2023-01-10 13:12:18.984765439 -0800
 @@ -28,8 +28,15 @@
  /*  The big type itself.
   */
@@ -152,8 +155,8 @@ diff -ur --no-dereference orig/usr/include/sys/NLchar.h mod/usr/include/sys/NLch
  /*  Number of distinct NLchars.
   */
 diff -ur --no-dereference orig/usr/include/sys/types.h mod/usr/include/sys/types.h
---- orig/usr/include/sys/types.h	1990-02-21 14:50:41.000000000 -0800
-+++ mod/usr/include/sys/types.h	2023-01-07 14:50:20.433391848 -0800
+--- orig/usr/include/sys/types.h	2023-01-09 03:51:36.000000000 -0800
++++ mod/usr/include/sys/types.h	2023-01-10 13:12:18.988098861 -0800
 @@ -71,7 +71,13 @@
  /* Miscellaneous kernel types */
  typedef	long	  daddr_t;	/* Disk address */
