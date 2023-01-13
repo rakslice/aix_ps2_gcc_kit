@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e -x
 
+# Build a compiler that runs on HOST and generates code for TARGET
+# (that is, a cross compiler for TARGET that we can use here)
+
 # The $PREFIX/bin dir _must_ be in the PATH. We did that above.
 which $TARGET-as
 
