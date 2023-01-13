@@ -1,10 +1,14 @@
 # downloaded source code
 /binutils-2.9.1.tar.gz
 /gcc-2.7.2.3.tar.gz
+/gcc-2.95.3.tar.gz
 
 # extracted source code
 /binutils-2.9.1/
 /gcc-2.7.2.3/
+/gcc-2.7.2.3-far/
+/gcc-2.95.3/
+/gcc-2.95.3-far/
 
 # export elements from aix
 /aixinclude.dsk
@@ -39,14 +43,17 @@
 /fixincludes_work/orig
 /fixincludes_work/mod
 
+# other work dirs i usually use
+/stock
+
 # marker files indicating components are done
 /*.done
 
 # output files
-/crossnative.tar.gz
-/crossnative*.dsk
+/crossnative-*.tar.gz
+/crossnative-*.dsk
 /binutils.tar.gz
-/sysroot_headers.tar.gz
+/sysroot_headers-*.tar.gz
 
 # other files laying around
 /*.iso

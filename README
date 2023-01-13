@@ -1,5 +1,5 @@
 
-A kit for cross building gcc-2.7.2.3 for aix ps/2 1.3 using red hat linux 5.0.5 (which also has 2.7.2.3)
+A kit for cross building old gcc versions for aix ps/2 1.3 using red hat linux 5.0.5 (which has gcc 2.7.2.3)
 
 Steps
 
@@ -12,13 +12,13 @@ Archives with full paths are what we want and leading '/'s are fine.
 dd in the disks to disk images aixinclude.dsk,
 aixbaselib.dsk, and aixlib{1,2}.dsk respectively. Put them in the current directory.
 
-2. Put the gcc-2.7.2.3 source on the aix machine and build libgcc1.a.
+2. Put the gcc source on the aix machine and build libgcc1.a.
 Put the libgcc1.a into the current directory. (todo: figure out the requirements and steps for this)
 
 3. Mount the rh 5.0.5 cdrom in /mnt/cdrom (or edit the cdrom= variable
 at the top of create_chroot.sh if you have the contents at a different path).
 
-4. Run ./go.sh
+4. Edit go.sh to uncomment the GCC_VER line for the version you want, and then run ./go.sh
 
  This will prepare the chroots and do the builds.
 

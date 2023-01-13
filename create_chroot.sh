@@ -3,6 +3,11 @@ set -e -x
 
 [ $(id -u) -eq 0 ]
 
+username=$(stat . -c '%U')
+
+[ "$username" != "root" ]
+[ -d "/home/$username" ]
+
 # Build a Red Hat Linux 5.0.5 x86 chroot and run go_in_rpm_chroot.sh in it.
 
 # Mount the cdrom somewhere and put its path here
@@ -12,7 +17,9 @@ cdrom=/mnt/cdrom
 # cdrom_chroot is a space for our chroot with the mount of the cdrom,
 # rh5_chroot is the actual chroot we're creating with build tools installed in it.
 
-mkdir -p rh5_chroot
+rh5_chroot=/tmp/rh5_chroot
+
+mkdir -p $rh5_chroot
 mkdir -p cdrom_chroot
 
 chroot=cdrom_chroot
@@ -34,14 +41,14 @@ if [ ! -e $chroot/dev/null ]; then
 	mknod $chroot/dev/null c 1 3
 fi
 
-if [ ! -e rh5_chroot/dev/null ]; then
-	mkdir -p rh5_chroot/dev
-	mknod rh5_chroot/dev/null c 1 3
+if [ ! -e $rh5_chroot/dev/null ]; then
+	mkdir -p $rh5_chroot/dev
+	mknod $rh5_chroot/dev/null c 1 3
 fi
 
 mount --bind /proc $chroot/proc
 
-mount --bind rh5_chroot $chroot/mnt/target
+mount --bind $rh5_chroot $chroot/mnt/target
 
 mount --bind $cdrom $chroot/mnt/cdrom
 
@@ -76,9 +83,9 @@ if [ $result -ne 0 ]; then
 	exit 1
 fi
 
-chroot=rh5_chroot
+chroot=$rh5_chroot
 
-for f in proc dev home mnt mnt/target mnt/cdrom root; do
+for f in proc dev home mnt mnt/target root; do
 	mkdir -p $chroot/$f
 done
 
@@ -86,30 +93,36 @@ done
 mount --bind /proc $chroot/proc
 mount --bind /dev $chroot/dev
 
-mkdir -p $chroot/mnt/cdrom
-mount --bind $cdrom $chroot/mnt/cdrom
+mkdir -p $chroot/home/$username
+chown -R 1000:1000 $chroot/home/$username
 
-mkdir -p $chroot/home/user
-chown -R 1000:1000 $chroot/home/user
+mkdir -p $chroot/home/$username/src
 
-mkdir -p $chroot/home/user/src
+if ! grep "^$username:" $chroot/etc/passwd > /dev/null; then
+echo "$username:x:$(id -u "$username"):$(id -g "$username")::/home/$username:/bin/sh" >> $chroot/etc/passwd
+fi
+if ! grep "^user:" $chroot/etc/group > /dev/null; then
+echo "$username:!:$(id -g "$username"):" >> $chroot/etc/group
+fi
 
-echo "user:x:1000:1000::/home/user:/bin/sh" >> $chroot/etc/passwd
+#mkdir -p $chroot/home/$username/src/aix_toolchain_new
+#pwd
+#mount --bind $(pwd) $chroot/home/$username/src/aix_toolchain_new
 
-mkdir -p $chroot/home/user/src/aix_toolchain_new
+mkdir -p $chroot/home/$username/src/
 pwd
-mount --bind $(pwd) $chroot/home/user/src/aix_toolchain_new
+cp -a $(pwd) $chroot/home/$username/src/
 
 #chroot $chroot '/bin/bash -c "cd /root/src/aix_toolchain_new; ls -l; ./go" ' || true
 
 if [ "$1" == "-d" ]; then
   echo "DIAGNOSTIC SHELL INSIDE BUILD CHROOT -- exit to continue the build"
-  chroot $chroot /bin/bash || true
+  chroot $chroot /bin/bash -c "cd /home/$username/src/aix_toolchain_new; bash" || true
 fi
-#chroot $chroot /bin/su user -c "/bin/bash /home/user/src/aix_toolchain_new/go_in_rpm_chroot.sh" || true
+#chroot $chroot /bin/su $username -c "/bin/bash /home/$username/src/aix_toolchain_new/go_in_rpm_chroot.sh" || true
 
 result=0
-chroot $chroot /bin/bash /home/user/src/aix_toolchain_new/go_in_rpm_chroot.sh || result=1
+chroot $chroot /bin/bash /home/$username/src/aix_toolchain_new/go_in_rpm_chroot.sh "$GCC_VER" "$username" || result=1
 #if [ $result -ne 0 ]; then
 #	echo "ERRORED, opening chroot shell to investigate"
 #	chroot $chroot /bin/bash || true

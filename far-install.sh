@@ -1,18 +1,27 @@
 #!/bin/sh
 
-set -e -x
+set -e
+set -x
 
-gcc=/opt/gcc-2.7.2.3
+gcc=/opt/gcc-$GCC_VER
+
+if [ -d gcc ]; then
+  cd gcc
+fi
+
+if [ ! -d $gcc ]; then
+  mkdir $gcc
+fi
 
 if [ ! -d $gcc/bin ]; then
-  mkdir -p $gcc/bin
+  mkdir $gcc/bin
 fi
 
 cp xgcc $gcc/bin/gcc
 cp cc1 cpp g++ cccp $gcc/bin
 
 if [ ! -d $gcc/lib ]; then
-  mkdir -p $gcc/lib
+  mkdir $gcc/lib
 fi
 
 cp libgcc.a $gcc/lib

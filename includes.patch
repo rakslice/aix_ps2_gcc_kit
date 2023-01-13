@@ -1,7 +1,7 @@
 diff -ur --no-dereference orig/usr/include/ctab.h mod/usr/include/ctab.h
 --- orig/usr/include/ctab.h	2023-01-09 03:51:11.000000000 -0800
-+++ mod/usr/include/ctab.h	2023-01-10 13:12:18.981432018 -0800
-@@ -17,9 +17,17 @@
++++ mod/usr/include/ctab.h	2023-01-12 15:48:37.712517162 -0800
+@@ -17,9 +17,20 @@
  #ifndef _H_CTAB
  #define _H_CTAB
  #ifndef _h_NLCHAR
@@ -16,7 +16,10 @@ diff -ur --no-dereference orig/usr/include/ctab.h mod/usr/include/ctab.h
 -typedef unsigned long wchar_t;	/* redefined to avoid including mbcs.h */
 +#ifndef _IS_WCHAR_T_
 +#define _IS_WCHAR_T_
-+typedef int wchar_t;     /* redefined to avoid including mbcs.h */
++#ifndef __WCHAR_TYPE__
++#define __WCHAR_TYPE__ unsigned long
++#endif
++typedef __WCHAR_TYPE__ wchar_t;     /* redefined to avoid including mbcs.h */
 +#endif
  struct NLctab {
  	long	ct_maxctp;		/* Number of chars for ctype */
@@ -89,7 +92,7 @@ diff -ur --no-dereference orig/usr/include/stddef.h mod/usr/include/stddef.h
 +#endif
 diff -ur --no-dereference orig/usr/include/stdio.h mod/usr/include/stdio.h
 --- orig/usr/include/stdio.h	2023-01-09 03:51:17.000000000 -0800
-+++ mod/usr/include/stdio.h	2023-01-10 13:12:18.984765439 -0800
++++ mod/usr/include/stdio.h	2023-01-12 15:40:26.057706410 -0800
 @@ -138,7 +138,13 @@
  #define	TMP_MAX	4096
  #define	FOPEN_MAX 200
@@ -105,18 +108,83 @@ diff -ur --no-dereference orig/usr/include/stdio.h mod/usr/include/stdio.h
  
  #ifdef CC4
  #define _bufend(p)	_bufendtab[(p)->_file]
-@@ -224,9 +230,11 @@
+@@ -224,9 +230,16 @@
  #endif
  #endif
  
+-typedef unsigned long wchar_t;			/* This is against ansi rule */
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
++
 +#ifndef __WCHAR_TYPE__
- typedef unsigned long wchar_t;			/* This is against ansi rule */
++#define __WCHAR_TYPE__ unsigned long
++#endif
++typedef __WCHAR_TYPE__ wchar_t;			/* This is against ansi rule */
  						/* except we need wchar_t    */
  						/* defined for out functions */
 +#endif
  
  #ifndef	lint					/* proto-types do not work   */
  						/* with lint                 */
+diff -ur --no-dereference orig/usr/include/stdlib.h mod/usr/include/stdlib.h
+--- orig/usr/include/stdlib.h	2023-01-09 03:51:17.000000000 -0800
++++ mod/usr/include/stdlib.h	2023-01-12 15:46:31.319566576 -0800
+@@ -12,7 +12,13 @@
+  */
+ 
+ /*  POSIX needed size_t */
+-typedef long size_t;
++#ifndef _IS_SIZE_T_
++#define _IS_SIZE_T_
++#ifndef __SIZE_TYPE__
++#define __SIZE_TYPE__ long
++#endif
++typedef __SIZE_TYPE__ size_t;
++#endif
+ 
+ /* stdlib.h */
+ 	
+@@ -48,9 +54,24 @@
+ /*
+  * MBCS specific stuff
+  */
+-typedef unsigned long wchar_t;		/* As per ANSI */
++#ifndef _IS_WCHAR_T_
++#define _IS_WCHAR_T_
++#ifndef __WCHAR_TYPE__
++#define __WCHAR_TYPE__ unsigned long
++#endif
++typedef __WCHAR_TYPE__ wchar_t;		/* As per ANSI */
++#endif
++#ifndef _IS_MBCHAR_T_
++#define _IS_MBCHAR_T_
+ typedef unsigned long mbchar_t;
+-typedef long size_t;
++#endif
++#ifndef _IS_SIZE_T_
++#define _IS_SIZE_T_
++#ifndef __SIZE_TYPE__
++#define __SIZE_TYPE__ long
++#endif
++typedef __SIZE_TYPE__ size_t;
++#endif
+ 
+ #ifndef MB_CUR_MAX
+ #define MB_CUR_MAX	(_mb_in_tbl->th_mb_cur_max)
+@@ -61,7 +82,13 @@
+ #endif /* MB_CUR_MAX */
+ 
+ extern int mblen(const char *, size_t);
++#ifndef _IS_MBTOWC_
++#define _IS_MBTOWC_
+ extern int mbtowc(wchar_t *, const char *, size_t);
++#endif
+ extern int wctomb(char *, wchar_t);
++#ifndef _IS_MBSTOWCS_
++#define _IS_MBSTOWCS_
+ extern size_t mbstowcs(wchar_t *, const char *, size_t);
++#endif
+ extern size_t wcstombs(char *, const wchar_t *, size_t);
 diff -ur --no-dereference orig/usr/include/string.h mod/usr/include/string.h
 --- orig/usr/include/string.h	2023-01-09 03:51:17.000000000 -0800
 +++ mod/usr/include/string.h	2023-01-10 13:12:18.984765439 -0800

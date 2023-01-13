@@ -11,9 +11,10 @@ rpm_names=""
 for p in \
 setup filesystem basesystem textutils grep ldconfig glibc termcap libtermcap fileutils bash \
 zlib rpm ncurses info make binutils tar gcc gcc-c++ patch gzip \
-gawk sed cracklib-dicts pamconfig pwdb pam sh-utils which less \
+gawk sed cracklib-dicts pamconfig pwdb pam sh-utils which less findutils mktemp \
 flex diffutils \
 kernel-headers glibc-devel \
+strace \
 	; do
 	if rpm --root $inner_chroot -q $p; then
 		continue

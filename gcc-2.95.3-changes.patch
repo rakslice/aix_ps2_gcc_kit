@@ -1,0 +1,30 @@
+diff -ur --no-dereference stock/gcc-2.95.3/gcc/collect2.c gcc-2.95.3/gcc/collect2.c
+--- stock/gcc-2.95.3/gcc/collect2.c	2001-01-25 06:03:01.000000000 -0800
++++ gcc-2.95.3/gcc/collect2.c	2023-01-12 23:41:44.689304432 -0800
+@@ -2838,9 +2838,14 @@
+      (((X).n_sclass == C_EXT) && ((X).n_scnum == N_UNDEF))
+ #   define GCC_SYMINC(X)	((X).n_numaux+1)
+ #   define GCC_SYMZERO(X)	0
++
++#ifdef COLLECT_EXPORT_LIST
+ #   define GCC_CHECK_HDR(X) \
+      ((HEADER (X).f_magic == U802TOCMAGIC && ! aix64_flag) \
+       || (HEADER (X).f_magic == 0757 && aix64_flag))
++#else
++#   define GCC_CHECK_HDR(X) 1
++#endif
+ #endif
+ 
+ extern char *ldgetname ();
+diff -ur --no-dereference stock/gcc-2.95.3/gcc/config/i386/aix386ng.h gcc-2.95.3/gcc/config/i386/aix386ng.h
+--- stock/gcc-2.95.3/gcc/config/i386/aix386ng.h	1999-01-19 16:41:30.000000000 -0800
++++ gcc-2.95.3/gcc/config/i386/aix386ng.h	2023-01-12 23:41:24.055486942 -0800
+@@ -40,7 +40,7 @@
+ 
+ /* Special flags for the linker.  I don't know what they do.  */
+ 
+-#define LINK_SPEC "%{K} %{!K:-K} %{T*} %{z:-lm}"
++#define LINK_SPEC "%{T*} %{z:-lm}"
+ 
+ /* Specify predefined symbols in preprocessor.  */
+ 
