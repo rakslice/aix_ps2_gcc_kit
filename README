@@ -1,7 +1,7 @@
 
 A kit for cross building old gcc versions for aix ps/2 1.3 using red hat linux 5.0.5 (which has gcc 2.7.2.3)
 
-Steps
+Steps to use
 
 1. Get the required exports (headers, libs) from the aix machine by tarring
 them to the floppy drive.
@@ -22,14 +22,16 @@ at the top of create_chroot.sh if you have the contents at a different path).
 
  This will prepare the chroots and do the builds.
 
- If everything is successful it will put the resulting build-gcc directory into the disk images
-  crossnative{1,2,3}.dsk
+ If everything is successful you will get:
 
-5. To install, extract the disk images on the aix system to get the build-gcc directory and in it run
-    make install
+  - crossnative-{ver}.tar.gz: tarball of the resulting build-gcc directory with the far system's native compiler
+  - sysroot_headers-{ver}.tar.gz: a set of patched headers including versions of the input headers
+     patched and then fixed by gcc as well as gcc's own override headers, assembled into a single set 
+     for use in the gcc headers override location
+  - binutils.tar.gz: a build of binutils-2.9.1 for the target system
+  - Split zero-padded 1.44MB .dsk image versions of these for easier copying if you're using floppies for transfer
 
-
-Scripts and pieces
+Scripts and pieces in the kit
 
 ./go.sh [options] - do the build
     Options (max 1)
@@ -38,3 +40,46 @@ Scripts and pieces
     -d  - pop a shell in the rh5 install chroot before the build
 ./cleanup_chroots - cleanup any mounted chroot directories, for when a run stopped unsafely
 ./reset.sh - clean up all the extracted/intermediate files including the chroots
+
+
+To install the resulting stuff
+
+  - Copy three tarballs (compiler, headers, binutils) to the target system. If you don't already have a gunzip there
+    you could gunzip them first on the build machine and then transfer the uncompressed tars.
+      gunzip {foo}.tar.gz
+    To use the disk images instead, dd them onto disks on the build machine or another
+    machine with a floppy drive
+      dd if=crossnative-{ver}-1.dsk of=/dev/fd0
+    Then on the aix system dd them back in from the disks into files on the system and then 
+    cat them together in order to get the original tarball with some zero padding on the end.
+      dd if=/dev/fd0 of=crossnative-{ver}-1.dsk
+      dd if=/dev/fd0 of=crossnative-{ver}-2.dsk
+      ...
+      cat crossnative-{ver}-1.dsk crossnative-{ver}-2.dsk ... > crossnative-{ver}.tar.gz
+
+  - Extract the crossnative tarball, go into it, and as root run
+      /path/to/gunzip -c crossnative-{ver}.tar.gz | tar xf -
+      cd build-gcc
+      ./far-install.sh {ver}
+    This will put the toolchain under /opt/gcc-{ver}
+
+  - Create the compiler's includes overrides directory /root/opt/far/i386-ibm-aix. No mkdir -p here.
+      mkdir /root
+      mkdir /root/opt
+      mkdir /root/opt/far
+      mkdir /root/opt/far/i386/ibm/aix
+    Go there and extract the sysroot_headers-{ver}.tar.gz tarball, and then move its include directory into
+    place within i386-ibm-aix
+      gunzip -c /path/to/sysroot_headers-{ver}.tar.gz | tar xf -
+      mv sysroot_headers/include .
+      rmdir sysroot_headers
+
+   - Extract the binutils under /opt. They will live under /opt/cross-far
+
+      cd /opt
+      gunzip -c /path/to/binutils.tar.gz | tar xf -
+
+To use
+
+   PATH=/opt/cross-far/bin:/opt/gcc-{ver}/bin:$PATH
+   export PATH
