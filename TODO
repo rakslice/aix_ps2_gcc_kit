@@ -10,3 +10,5 @@ TODO
    build; clean up the old gcc-lib includes patch
 - try to make the gcc version handling less piecemeal, and add a better way to 
    specify than editing go.sh
+- fix the prefix used for the far compiler build so we get a more comprehensible
+   search path for override headers than the current /root/opt/far
