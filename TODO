@@ -4,6 +4,9 @@ TODO
 - double check the process for libgcc1.a
 - explore fakeroot so we don't need root perms at all or at least make the build 
    part of the build not use them
-- document the requirements on the host machine we're running this on and on the aix machine for the steps that happen there
-- figure out how to avoid having to manually fix 2.95.3 generated headers mid build; clean up the old gcc-lib includes patch
-- try to make the gcc version handling less piecemeal, and add a better way to specify than editing go.sh
+- document the requirements on the host machine we're running this on and on the 
+   aix machine for the steps that happen there
+- figure out how to avoid having to manually fix 2.95.3 generated headers mid 
+   build; clean up the old gcc-lib includes patch
+- try to make the gcc version handling less piecemeal, and add a better way to 
+   specify than editing go.sh
