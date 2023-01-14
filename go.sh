@@ -104,7 +104,8 @@ pushd "gcc-$GCC_VER-far"
 if [ "$GCC_VER" == "2.95.3" ]; then
   # In this case where the host and target are the same but different from build
   # (so the compiler we're building is not technically a cross compiler, but a native compiler for a different machine)
-  # gcc 2.95.3 scripts want to do fixinc... but you can't specify headers, so they do it on the build machine's headers.
+  # gcc 2.95.3 scripts want to do fixinc... but you can't specify headers, because it's "not a cross compiler",
+  # so it tries to do it on ... the build machine's headers.
   # This is broken and also stupid.
   # We already have the fixed headers for that arch from the cross compiler build, we can just disable the fixinc entirely
   # for this run, using this nice patch that lfs has
