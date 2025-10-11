@@ -67,7 +67,7 @@ To install the resulting stuff
       mkdir /root
       mkdir /root/opt
       mkdir /root/opt/far
-      mkdir /root/opt/far/i386/ibm/aix
+      mkdir /root/opt/far/i386-ibm-aix
     Go there and extract the sysroot_headers-{ver}.tar.gz tarball, and then move its include directory into
     place within i386-ibm-aix
       gunzip -c /path/to/sysroot_headers-{ver}.tar.gz | tar xf -
